@@ -1,0 +1,11 @@
+logs/
+runtime/
+
+bin/
+
+env.local.ps1
+
+*.local.xml
+*.generated.xml
+
+*.log

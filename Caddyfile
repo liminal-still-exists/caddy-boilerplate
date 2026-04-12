@@ -1,0 +1,20 @@
+{$CADDY_PUBLIC_HOST} {
+	encode gzip zstd
+
+	@myrag path /myrag /myrag/*
+	handle @myrag {
+		reverse_proxy {$MYRAG_UPSTREAM}
+	}
+
+	@myrag_wellknown path /.well-known/oauth-protected-resource/myrag /.well-known/oauth-authorization-server/myrag /.well-known/openid-configuration/myrag
+	handle @myrag_wellknown {
+		reverse_proxy {$MYRAG_UPSTREAM}
+	}
+
+	respond 404
+}
+
+{$OPEN_WEBUI_PUBLIC_HOST} {
+	encode gzip zstd
+	reverse_proxy {$OPEN_WEBUI_UPSTREAM}
+}
