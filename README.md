@@ -41,22 +41,15 @@ Get-Service CaddyGateway
 Restart-Service CaddyGateway
 ```
 
-### 로그 정리 작업 등록
+### 로그 관리
 
-권장 운영 방식은 아래처럼 나뉜다.
+로그는 `NSSM`이 직접 파일로 기록하고 회전한다.
 
-- `Caddy` 실행 유지: `NSSM` 기반 Windows 서비스
-- 로그 자동 정리: Windows 작업 스케줄러
+- 표준 출력: `logs\CaddyGateway.out.log`
+- 표준 에러: `logs\CaddyGateway.err.log`
+- 회전 기준 용량: `1MB`
 
-관리자 권한 PowerShell에서 아래 스크립트를 실행해 로그 정리 작업을 등록한다.
-
-```powershell
-.\ops\register_log_cleanup_task.ps1
-```
-
-등록되는 작업 이름은 `\caddy_gateway\log_cleanup`이다.
-
-이 작업은 `ops\cleanup_logs.ps1`를 실행해 오래된 로그 파일을 정리한다.
+로그 회전 설정은 `ops\register_windows_services.ps1`에서 서비스 등록 시 함께 적용된다.
 
 ## 책임 범위
 
@@ -112,5 +105,3 @@ PowerShell에서 직접 실행:
 - `env.example.ps1`: 비공개 실제 값 예시 파일
 - `run_caddy.ps1`: Caddy 실행 스크립트
 - `ops/register_windows_services.ps1`: NSSM 기반 Windows 서비스 등록 스크립트
-- `ops/register_log_cleanup_task.ps1`: 로그 정리 작업 스케줄러 등록 스크립트
-- `ops/cleanup_logs.ps1`: 로그 정리 스크립트

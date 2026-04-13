@@ -50,6 +50,7 @@ function Install-NssmService {
     & $nssm set $Name AppStderr (Join-Path $logsDir "$Name.err.log") | Out-Null
     & $nssm set $Name AppRotateFiles 1 | Out-Null
     & $nssm set $Name AppRotateOnline 1 | Out-Null
+    & $nssm set $Name AppRotateBytes 1048576 | Out-Null
 
     sc.exe config $Name start= delayed-auto | Out-Null
     if ($LASTEXITCODE -ne 0) {
